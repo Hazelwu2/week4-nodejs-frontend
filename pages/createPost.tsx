@@ -32,7 +32,10 @@ export const CreatePostPage: NextPage = () => {
       <div className="flex justify-center min-h-screen h-full pt-12 bg-c-bg">
         <main className="max-w-[1200px] w-full flex justify-between">
           <div className="w-3/4 pr-7">
-            <Title text="張貼動態" className="mb-8" />
+            <Title
+              text="張貼動態"
+              className="mb-8"
+            />
             <div className="bg-white border-2 border-solid border-dark rounded-lg flex flex-col items-center p-8">
               <div className="w-full">
                 <p className="text-dark mb-1">貼文內容</p>
