@@ -10,11 +10,13 @@ interface PostProps {
   userName: string;
   content: string;
   src?: StaticImageData;
-  userIcon: StaticImageData;
+  userAvatar: StaticImageData;
+  // userAvatar: string;
   date?: string;
   className?: string;
-  like?: number;
+  likes?: number;
   comments?: any[];
+  image?: string;
 }
 
 /**
@@ -22,16 +24,18 @@ interface PostProps {
  */
 export const Post = ({
   userName,
-  userIcon,
+  userAvatar,
   content,
   src,
   date,
   className,
-  like,
-  comments,
+  likes,
+  image
+  // comments,
 }: PostProps) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
+
   return (
     <div
       className={`bg-white border-2 border-b-4 border-dark border-solid rounded-lg w-full min-w-[300px] p-6 ${className}`}
@@ -40,19 +44,20 @@ export const Post = ({
         userName={userName}
         width="45px"
         height="45px"
-        src={userIcon}
+        src={userAvatar}
         date={date}
         className="mb-4"
       />
       <p className="mb-4">{content}</p>
       {src && (
         <div className="relative h-[157px] mb-5">
-          <Image src={src ?? ""} layout="fill" />
+          {/* <Image src={src ?? ""} layout="fill" alt="image" /> */}
+          <Image src={user1} layout="fill" alt="image" />
         </div>
       )}
-      {like ? (
+      {likes ? (
         <div className="flex items-center mb-5">
-          <LikeOutlined className="text-xl flex items-center mr-2" /> {like}
+          <LikeOutlined className="text-xl flex items-center mr-2" /> {likes}
         </div>
       ) : (
         <div className="flex items-center mb-5">
@@ -62,7 +67,7 @@ export const Post = ({
       )}
       <div className="flex mb-4">
         <div className=" mr-3">
-          <Image width="40px" height="40px" src={user1} />
+          <Image width="40px" height="40px" src={user1} alt="User" />
         </div>
         <Input
           className="h-10"
@@ -72,9 +77,8 @@ export const Post = ({
         <div className="w-[128px] relative">
           <button
             type="button"
-            className={`w-full h-full border-solid border-dark border-2 ${
-              loading ? "bg-active text-dark" : "bg-primary text-white"
-            }`}
+            className={`w-full h-full border-solid border-dark border-2 ${loading ? "bg-active text-dark" : "bg-primary text-white"
+              }`}
             onClick={() => {
               setLoading(!loading);
             }}
@@ -82,26 +86,26 @@ export const Post = ({
             留言
             {loading && (
               <span className="absolute top-2 right-5">
-                <Image width="12px" height="12px" src={loadingGif} />
+                <Image width="12px" height="12px" src={loadingGif} alt="Loading" />
               </span>
             )}
           </button>
         </div>
       </div>
-      {comments &&
+      {/* {comments &&
         comments.map((comment, index) => (
           <div key={index} className="bg-c-bg/30 p-4 mb-4">
             <User
               userName={comment.userName}
               width="45px"
               height="45px"
-              src={comment.userIcon}
+              src={comment.userAvatar}
               date={comment.date}
               className="mb-4"
             />
             <p className="ml-16">{comment.content}</p>
           </div>
-        ))}
+        ))} */}
     </div>
   );
 };

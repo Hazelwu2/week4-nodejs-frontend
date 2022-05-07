@@ -3,7 +3,8 @@ import Image, { StaticImageData } from "next/image";
 
 interface UserProps {
   userName: string;
-  src: StaticImageData;
+  // src: StaticImageData;
+  src: string;
   width?: string;
   height?: string;
   date?: string;
@@ -29,12 +30,11 @@ export const User = ({
 }: UserProps) => (
   <div className={`flex mr-2.5 ${className}`}>
     <div className="flex justify-center items-center mr-4">
-      <Image width={width} height={height} src={src}></Image>
+      <Image width={width} height={height} src={src} alt="image" />
     </div>
     <div
-      className={`flex flex-col justify-center ${
-        bottomLine ? "border-b-2 border-b-solid border-b-dark" : ""
-      }`}
+      className={`flex flex-col justify-center ${bottomLine ? "border-b-2 border-b-solid border-b-dark" : ""
+        }`}
     >
       <p className="font-bold hover:text-primary hover:underline">{userName}</p>
       {date && <p className="text-xs text-light">{date}</p>}

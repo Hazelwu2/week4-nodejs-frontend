@@ -1,17 +1,20 @@
 import request from '../utils/axios'
+import { resHandle } from '../utils/resHandle'
 
 // 取得清單
-export function getPostListAPI(data) {
-  return request({
+export async function getPostListAPI(data) {
+  const resData = await request({
     url: 'api/posts',
     method: 'get',
     data
   })
+
+  return resHandle(resData)
 }
 
 // 新增貼文
-export function createPostAPI(data) {
-  return request({
+export async function createPostAPI(data) {
+  const resData = await request({
     url: 'api/posts',
     method: 'post',
     headers: {
@@ -19,31 +22,39 @@ export function createPostAPI(data) {
     },
     data
   })
+
+  return resHandle(resData)
 }
 
 // 刪除所有貼文
-export function deleteAllPostAPI(data) {
-  return request({
+export async function deleteAllPostAPI(data) {
+  const resData = await request({
     url: 'api/posts',
     method: 'delete',
     data
   })
+
+  return resHandle(resData)
 }
 
 // 更新貼文
 export function updatePostAPI(id, data) {
-  return request({
+  const resData = request({
     url: `api/posts/${id}`,
     method: 'patch',
     data
   })
+
+  return resHandle(resData)
 }
 
 // 刪除貼文
 export function deletePostAPI(id) {
-  return request({
+  const resData = request({
     url: `api/posts/${id}`,
     method: 'delete',
   })
+
+  return resHandle(resData)
 }
 

@@ -1,6 +1,6 @@
 import { SearchOutlined } from "@ant-design/icons";
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from "../stories/modules/header/Header";
 import { Input } from "../stories/modules/input/Input";
 import { OptionList } from "../stories/modules/optionList/OptionList";
@@ -13,9 +13,27 @@ import user5 from "../public/image/user5.png";
 import user51 from "../public/image/user5-1.png";
 import dayjs from "dayjs";
 import { Toolbar } from "../stories/modules/toolbar/Toolbar";
+import { getPostListAPI } from '../api/post'
+import postStories from "../stories/modules/Post/post.stories";
+
+interface PostList {
+  _id: string,
+  user: {
+    _id: string,
+    name: string,
+    avatar: string
+  },
+  content: string;
+  createdAt: number;
+  image: string;
+  likes: number;
+  src: any[];
+  comments?: any[];
+}
 
 export const PostPage: NextPage = () => {
   const [options, setOptions] = useState([{ name: "邊緣小杰", icon: user1 }]);
+  const [postList, setPostList] = useState<PostList[]>([])
   const mockData = [
     {
       userName: "邊緣小杰",
@@ -53,9 +71,11 @@ export const PostPage: NextPage = () => {
     },
   ];
 
-  const getPostWall = async () => {
-    console.log('test')
-  }
+  useEffect(() => {
+    getPostListAPI().then((data) => {
+      if (data) setPostList(data.data)
+    })
+  }, [])
 
   return (
     <>
@@ -69,16 +89,31 @@ export const PostPage: NextPage = () => {
                 <Input onChange={() => { }} />
                 <div>
                   <button
-                    className="bg-primary w-12 h-12 border-2 border-dark border-solid"
-                    onClick={getPostWall}>
+                    className="bg-primary w-12 h-12 border-2 border-dark border-solid">
                     <SearchOutlined className="text-white text-xl flex items-center justify-center" />
                   </button>
                 </div>
               </div>
             </div>
-            {mockData.map(data => (
+
+            {postList.length > 0 ? postList.map(post =>
+              <div key={post._id}>
+                <Post
+                  userName={post?.user?.name}
+                  userAvatar={bg || post?.user?.avatar}
+                  content={post?.content}
+                  date={dayjs(post?.createdAt).format("YYYY/MM/DD HH:mm")}
+                  image={post?.image}
+                  likes={post?.likes}
+                  src={bg}
+                  className="mb-4"
+                />
+              </div>
+            ) : <div>123123</div>
+            }
+            {/* {postList.map(data => (
               <Post
-                key={data.userName}
+                key={data._id}
                 userName={data.userName}
                 content={data.content}
                 src={data.src}
@@ -88,7 +123,7 @@ export const PostPage: NextPage = () => {
                 comments={data.comments}
                 className="mb-4"
               />
-            ))}
+            ))} */}
           </div>
           <div className="hidden md:block md:w-1/4">
             <OptionList options={options} />
