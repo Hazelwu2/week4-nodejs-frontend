@@ -25,14 +25,25 @@ service.interceptors.request.use(
 // [Response 回應]
 service.interceptors.response.use(
   response => {
+    console.log(response)
     console.log(
       `%c🔌 Response:%c${response.config.url}`,
       'background:deepskyblue; padding: 3px; border-radius: 5px; color: #fff;',
       'padding: 3px;',
-      response.data
+      response.message,
     )
 
     return response
+  },
+
+  error => {
+    console.error(`❌ 發生錯誤：${error}`)
+    const test = {
+      name: error.name,
+      code: error.code,
+      message: error.message
+    }
+    console.table(test)
   }
 )
 
