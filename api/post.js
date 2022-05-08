@@ -11,6 +11,17 @@ export async function getPostListAPI(data) {
 
 }
 
+// 取得清單
+export async function getPostListQueryAPI({ sort = '', q = '' }) {
+  return await request({
+    // sort: 針對 createdAt 排序，asc || desc
+    // q: 針對貼文內容 content 模糊搜尋
+    url: `api/posts?sort=${sort}&q=${q}`,
+    method: 'get',
+  })
+
+}
+
 // 新增貼文
 export async function createPostAPI(data) {
   return await request({

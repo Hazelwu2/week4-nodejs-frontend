@@ -13,7 +13,7 @@ import user5 from "../public/image/user5.png";
 import user51 from "../public/image/user5-1.png";
 import dayjs from "dayjs";
 import { Toolbar } from "../stories/modules/toolbar/Toolbar";
-import { getPostListAPI } from '../api/post'
+import { getPostListAPI, getPostListQueryAPI } from '../api/post'
 import postStories from "../stories/modules/Post/post.stories";
 
 interface PostList {
@@ -73,9 +73,23 @@ export const PostPage: NextPage = () => {
 
   useEffect(() => {
     getPostListAPI().then((res) => {
-      if (res.data.status === 1) setPostList(res.data.data)
+      if (res.data.status === 1) setPostList(res.data)
     })
   }, [])
+
+  /**
+   * 變動下拉選單：舊到新貼文、新到舊貼文
+   * @date 2022-05-08
+   * @param {string} val:string desc(舊到新貼文), asc(最新貼文)
+   */
+  const handleSelectChange = async (val: string) => {
+    const params = {
+      sort: val,
+    }
+
+    const { status, data } = await getPostListQueryAPI(params)
+    if (status === 1) setPostList(data)
+  }
 
   return (
     <>
@@ -84,7 +98,10 @@ export const PostPage: NextPage = () => {
         <main className="max-w-[1200px] w-full flex justify-between">
           <div className="w-full md:w-3/4 md:pr-7">
             <div className="flex flex-col md:flex-row mb-4">
-              <Select className="mb-1.5 md:mb-0 md:mr-3" />
+              <Select
+                onChange={handleSelectChange}
+                className="mb-1.5 md:mb-0 md:mr-3"
+              />
               <div className="flex w-full">
                 <Input onChange={() => { }} />
                 <div>

@@ -31,8 +31,7 @@ service.interceptors.response.use(
       'padding: 3px;',
       response.data
     )
-
-    return response
+    return response.data
   },
 
   error => {
