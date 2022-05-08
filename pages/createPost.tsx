@@ -6,16 +6,20 @@ import Image from "next/image";
 import user1 from "../public/image/user.png";
 import { Title } from "../stories/modules/title/Title";
 import { Button } from "../stories/modules/button/Button";
+import { createPostAPI } from '../api/post'
+import { useRouter } from 'next/router'
 
 export const CreatePostPage: NextPage = () => {
+  const router = useRouter()
   const [options, setOptions] = useState([{ name: "邊緣小杰", icon: user1 }]);
   const [content, setContent] = useState("");
   const [isError, setIsError] = useState(false);
-  const [image, setImage] = useState({
+  const defaultImage = {
     imageFile: {},
     imagePreview: "",
     imageSize: 0,
-  });
+  }
+  const [image, setImage] = useState(defaultImage);
   const uploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files?.length > 0) {
       setImage({
@@ -25,6 +29,25 @@ export const CreatePostPage: NextPage = () => {
       });
     }
   };
+
+  const submitForm = async () => {
+
+    const formData = new FormData()
+    formData.append('name', 'Hazel')
+    formData.append('content', content)
+    formData.append('image', image.imageFile)
+    const data = await createPostAPI(formData)
+
+
+
+    setContent('content', "")
+    setContent('setImage', defaultImage)
+    if (data) {
+      alert('上傳成功')
+      router.push('/post')
+      router.reload
+    }
+  }
 
   return (
     <>
@@ -64,6 +87,7 @@ export const CreatePostPage: NextPage = () => {
                       src={image.imagePreview}
                       layout="fill"
                       objectFit="cover"
+                      alt="Image Preview"
                     />
                   </div>
                 )}
@@ -77,7 +101,7 @@ export const CreatePostPage: NextPage = () => {
                 <Button
                   label="送出新貼文"
                   disable={!content}
-                  onButtonClick={() => setIsError(!isError)}
+                  onButtonClick={submitForm}
                 />
               </div>
             </div>

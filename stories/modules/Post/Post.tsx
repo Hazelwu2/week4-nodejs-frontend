@@ -10,8 +10,7 @@ interface PostProps {
   userName: string;
   content: string;
   src?: StaticImageData;
-  userAvatar: StaticImageData;
-  // userAvatar: string;
+  userAvatar: string;
   date?: string;
   className?: string;
   likes?: number;
@@ -51,8 +50,7 @@ export const Post = ({
       <p className="mb-4">{content}</p>
       {src && (
         <div className="relative h-[157px] mb-5">
-          {/* <Image src={src ?? ""} layout="fill" alt="image" /> */}
-          <Image src={user1} layout="fill" alt="image" />
+          <Image src={image} layout="fill" alt="image" />
         </div>
       )}
       {likes ? (

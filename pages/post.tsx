@@ -72,8 +72,8 @@ export const PostPage: NextPage = () => {
   ];
 
   useEffect(() => {
-    getPostListAPI().then((data) => {
-      if (data) setPostList(data.data)
+    getPostListAPI().then((res) => {
+      if (res.data.status === 1) setPostList(res.data.data)
     })
   }, [])
 
@@ -100,7 +100,7 @@ export const PostPage: NextPage = () => {
               <div key={post._id}>
                 <Post
                   userName={post?.user?.name}
-                  userAvatar={bg || post?.user?.avatar}
+                  userAvatar={post?.user?.avatar}
                   content={post?.content}
                   date={dayjs(post?.createdAt).format("YYYY/MM/DD HH:mm")}
                   image={post?.image}
@@ -109,21 +109,8 @@ export const PostPage: NextPage = () => {
                   className="mb-4"
                 />
               </div>
-            ) : <div>123123</div>
+            ) : <div>無任何貼文</div>
             }
-            {/* {postList.map(data => (
-              <Post
-                key={data._id}
-                userName={data.userName}
-                content={data.content}
-                src={data.src}
-                userIcon={data.userIcon}
-                date={data.date}
-                like={data.like}
-                comments={data.comments}
-                className="mb-4"
-              />
-            ))} */}
           </div>
           <div className="hidden md:block md:w-1/4">
             <OptionList options={options} />
