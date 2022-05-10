@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 const service = axios.create({
   baseURL: 'http://localhost:3005'
@@ -18,6 +19,11 @@ service.interceptors.request.use(
   },
   error => {
     console.error(`❌ 發生錯誤：${error}`) // for debug
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: `${error}`,
+    })
     return Promise.reject(error)
   }
 )
@@ -31,17 +37,22 @@ service.interceptors.response.use(
       'padding: 3px;',
       response.data
     )
+
     return response.data
   },
 
   error => {
     console.error(`❌ 發生錯誤：${error}`)
-    const test = {
-      name: error.name,
-      code: error.code,
-      message: error.message
-    }
-    console.table(test)
+    const { message } = error?.response.data
+
+    // alert(`發生錯誤：${error.response.status} ${message}`)
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops..發生錯誤',
+      text: `${message}`,
+    })
+
+    console.table(error.response.data)
   }
 )
 
