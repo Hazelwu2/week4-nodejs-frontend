@@ -9,7 +9,7 @@ import loadingGif from "../../../public/image/loading.gif";
 interface PostProps {
   userName: string;
   content: string;
-  src?: StaticImageData;
+  // src?: StaticImageData;
   userAvatar: string;
   date?: string;
   className?: string;
@@ -25,7 +25,7 @@ export const Post = ({
   userName,
   userAvatar,
   content,
-  src,
+  // src,
   date,
   className,
   likes,
@@ -48,7 +48,7 @@ export const Post = ({
         className="mb-4"
       />
       <p className="mb-4">{content}</p>
-      {src && (
+      {image && (
         <div className="relative h-[157px] mb-5">
           <Image src={image} layout="fill" alt="image" />
         </div>

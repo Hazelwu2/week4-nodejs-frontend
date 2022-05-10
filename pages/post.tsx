@@ -27,53 +27,18 @@ interface PostList {
   createdAt: number;
   image: string;
   likes: number;
-  src: any[];
   comments?: any[];
 }
 
 export const PostPage: NextPage = () => {
   const [options, setOptions] = useState([{ name: "邊緣小杰", icon: user1 }]);
+  const [query, setQuery] = useState('')
+  const [sort, setTimeSort] = useState('')
   const [postList, setPostList] = useState<PostList[]>([])
-  const mockData = [
-    {
-      userName: "邊緣小杰",
-      userIcon: user1,
-      date: dayjs().format("YYYY/MM/DD HH:mm"),
-      content: "外面看起來就超冷.... 我決定回被窩繼續睡....>.<",
-      src: bg,
-      comments: [
-        {
-          userName: "希琳",
-          userIcon: user4,
-          content: "真的～我已經準備冬眠了",
-          date: dayjs().format("YYYY/MM/DD HH:mm"),
-        },
-        {
-          userName: "波吉",
-          userIcon: user51,
-          content: "會嗎？我沒穿衣服都不覺得冷",
-          date: dayjs().format("YYYY/MM/DD HH:mm"),
-        },
-      ],
-    },
-    {
-      userName: "波吉",
-      userIcon: user51,
-      date: dayjs().format("YYYY/MM/DD HH:mm"),
-      content: "我一定要成為很棒棒的國王！",
-      like: 3,
-    },
-    {
-      userName: "阿爾敏",
-      userIcon: user5,
-      date: dayjs().format("YYYY/MM/DD HH:mm"),
-      content: "各位我有一個作戰計畫",
-    },
-  ];
 
   useEffect(() => {
     getPostListAPI().then((res) => {
-      if (res.data.status === 1) setPostList(res.data)
+      if (res.status === 1) setPostList(res.data)
     })
   }, [])
 
@@ -82,9 +47,23 @@ export const PostPage: NextPage = () => {
    * @date 2022-05-08
    * @param {string} val:string desc(舊到新貼文), asc(最新貼文)
    */
-  const handleSelectChange = async (val: string) => {
+  const handleSelectChange = async (sort: string) => {
+    setTimeSort(sort)
     const params = {
-      sort: val,
+      sort,
+      q: query
+    }
+
+    const { status, data } = await getPostListQueryAPI(params)
+    if (status === 1) setPostList(data)
+  }
+
+  const handleInputChange = (query: string) => setQuery(query)
+
+  const searchData = async () => {
+    const params = {
+      sort,
+      q: query
     }
 
     const { status, data } = await getPostListQueryAPI(params)
@@ -103,10 +82,12 @@ export const PostPage: NextPage = () => {
                 className="mb-1.5 md:mb-0 md:mr-3"
               />
               <div className="flex w-full">
-                <Input onChange={() => { }} />
+                <Input onChange={handleInputChange} />
                 <div>
                   <button
-                    className="bg-primary w-12 h-12 border-2 border-dark border-solid">
+                    onClick={searchData}
+                    className="bg-primary w-12 h-12 border-2 border-dark border-solid
+                  ">
                     <SearchOutlined className="text-white text-xl flex items-center justify-center" />
                   </button>
                 </div>
@@ -117,12 +98,11 @@ export const PostPage: NextPage = () => {
               <div key={post._id}>
                 <Post
                   userName={post?.user?.name}
-                  userAvatar={post?.user?.avatar}
+                  userAvatar={post?.user?.avatar || 'https://i.imgur.com/ebhxV0n.jpeg'}
                   content={post?.content}
                   date={dayjs(post?.createdAt).format("YYYY/MM/DD HH:mm")}
                   image={post?.image}
                   likes={post?.likes}
-                  src={bg}
                   className="mb-4"
                 />
               </div>
