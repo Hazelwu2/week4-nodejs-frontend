@@ -45,7 +45,6 @@ service.interceptors.response.use(
     console.error(`❌ 發生錯誤：${error}`)
     const { message } = error?.response.data
 
-    // alert(`發生錯誤：${error.response.status} ${message}`)
     Swal.fire({
       icon: 'error',
       title: 'Oops..發生錯誤',

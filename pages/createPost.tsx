@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
-import { ChangeEvent, useEffect, useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { Header } from "../stories/modules/header/Header";
 import { OptionList } from "../stories/modules/optionList/OptionList";
 import Image from "next/image";
@@ -8,6 +9,14 @@ import { Title } from "../stories/modules/title/Title";
 import { Button } from "../stories/modules/button/Button";
 import { createPostAPI } from '../api/post'
 import { useRouter } from 'next/router'
+import Swal from 'sweetalert2'
+
+interface ImageType {
+  imageFile: any,
+  imagePreview: string,
+  imageSize: number
+}
+
 
 export const CreatePostPage: NextPage = () => {
   const router = useRouter()
@@ -19,8 +28,8 @@ export const CreatePostPage: NextPage = () => {
     imagePreview: "",
     imageSize: 0,
   }
-  const [image, setImage] = useState(defaultImage);
-  const uploadImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const [image, setImage] = useState<ImageType[]>([])
+  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files?.length > 0) {
       setImage({
         imageFile: e.target.files[0],
@@ -36,6 +45,7 @@ export const CreatePostPage: NextPage = () => {
     formData.append('name', 'Hazel')
     formData.append('content', content)
     formData.append('image', image.imageFile)
+    Swal.showLoading()
     const data = await createPostAPI(formData)
 
 
@@ -43,9 +53,13 @@ export const CreatePostPage: NextPage = () => {
     setContent('content', "")
     setContent('setImage', defaultImage)
     if (data) {
-      alert('上傳成功')
+      Swal.hideLoading()
+      Swal.fire({
+        icon: 'success',
+        title: '成功',
+        text: `${data.message}`,
+      })
       router.push('/post')
-      router.reload
     }
   }
 

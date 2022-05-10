@@ -35,6 +35,7 @@ export const PostPage: NextPage = () => {
   const [query, setQuery] = useState('')
   const [sort, setTimeSort] = useState('')
   const [postList, setPostList] = useState<PostList[]>([])
+  const [comments, setComments] = useState([])
 
   useEffect(() => {
     getPostListAPI().then((res) => {
@@ -104,9 +105,10 @@ export const PostPage: NextPage = () => {
                   image={post?.image}
                   likes={post?.likes}
                   className="mb-4"
+                  comments={post?.comments}
                 />
               </div>
-            ) : <div>無任何貼文</div>
+            ) : <div>目前尚無動態，新增一則貼文吧</div>
             }
           </div>
           <div className="hidden md:block md:w-1/4">

@@ -29,11 +29,13 @@ export const Post = ({
   date,
   className,
   likes,
-  image
-  // comments,
+  image,
+  comments
 }: PostProps) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleInputChange = (query: string) => setValue(query)
 
   return (
     <div
@@ -70,7 +72,7 @@ export const Post = ({
         <Input
           className="h-10"
           value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={handleInputChange}
         />
         <div className="w-[128px] relative">
           <button
@@ -90,7 +92,7 @@ export const Post = ({
           </button>
         </div>
       </div>
-      {/* {comments &&
+      {comments && comments.length > 0 &&
         comments.map((comment, index) => (
           <div key={index} className="bg-c-bg/30 p-4 mb-4">
             <User
@@ -103,7 +105,7 @@ export const Post = ({
             />
             <p className="ml-16">{comment.content}</p>
           </div>
-        ))} */}
+        ))}
     </div>
   );
 };
