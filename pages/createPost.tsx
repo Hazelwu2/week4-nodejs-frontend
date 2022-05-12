@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import React from "react";
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { Header } from "../stories/modules/header/Header";
 import { OptionList } from "../stories/modules/optionList/OptionList";
 import Image from "next/image";
@@ -11,25 +11,24 @@ import { createPostAPI } from '../api/post'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
 
-interface ImageType {
-  imageFile: any,
-  imagePreview: string,
-  imageSize: number
+interface Image {
+  imageFile: Blob;
+  imagePreview: string;
+  imageSize: number;
 }
-
-
 export const CreatePostPage: NextPage = () => {
   const router = useRouter()
   const [options, setOptions] = useState([{ name: "邊緣小杰", icon: user1 }]);
   const [content, setContent] = useState("");
   const [isError, setIsError] = useState(false);
   const defaultImage = {
-    imageFile: {},
+    imageFile: new Blob,
     imagePreview: "",
     imageSize: 0,
   }
-  const [image, setImage] = useState<ImageType[]>([])
-  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [image, setImage] = useState<Image>(defaultImage);
+
+  const uploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files?.length > 0) {
       setImage({
         imageFile: e.target.files[0],
@@ -48,10 +47,9 @@ export const CreatePostPage: NextPage = () => {
     Swal.showLoading()
     const data = await createPostAPI(formData)
 
+    setContent("")
+    setImage(defaultImage)
 
-
-    setContent('content', "")
-    setContent('setImage', defaultImage)
     if (data) {
       Swal.hideLoading()
       Swal.fire({

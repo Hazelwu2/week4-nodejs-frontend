@@ -1,9 +1,8 @@
 import React from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
 interface UserProps {
   userName: string;
-  // src: StaticImageData;
   src: string;
   width?: string;
   height?: string;

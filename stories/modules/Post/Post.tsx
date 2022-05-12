@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { User } from "../user/User";
 import { LikeOutlined } from "@ant-design/icons";
 import { Input } from "../input/Input";
@@ -9,7 +9,6 @@ import loadingGif from "../../../public/image/loading.gif";
 interface PostProps {
   userName: string;
   content: string;
-  // src?: StaticImageData;
   userAvatar: string;
   date?: string;
   className?: string;
