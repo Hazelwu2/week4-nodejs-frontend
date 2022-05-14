@@ -1,8 +1,11 @@
 import axios from 'axios'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
+console.log(process.env.NODE_ENV)
 const service = axios.create({
-  baseURL: 'http://localhost:3005'
+  baseURL: process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3005'
+    : 'https://week4-nodejs.herokuapp.com'
 })
 
 // [發出請求]
