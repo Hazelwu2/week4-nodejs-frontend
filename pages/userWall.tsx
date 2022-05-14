@@ -15,10 +15,10 @@ import dayjs from "dayjs";
 import { FollowTitle } from "../stories/modules/followTitle/FollowTitle";
 
 export const UserWallPage: NextPage = () => {
-  const [options, setOptions] = useState([{ name: "邊緣小杰", icon: user1 }]);
+  const [options, setOptions] = useState([{ name: "Hazel", icon: user1 }]);
   const mockData = [
     {
-      userName: "邊緣小杰",
+      userName: "Hazel",
       userIcon: 'https://i.imgur.com/ebhxV0n.jpeg',
       date: dayjs().format("YYYY/MM/DD HH:mm"),
       content: "外面看起來就超冷.... 我決定回被窩繼續睡....>.<",

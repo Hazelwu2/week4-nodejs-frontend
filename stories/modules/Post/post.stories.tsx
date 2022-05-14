@@ -23,7 +23,7 @@ const Template: ComponentStory<typeof Post> = args => <Post {...args} />;
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-  userName: "邊緣小杰",
+  userName: "Hazel",
   userAvatar: 'https://i.imgur.com/ebhxV0n.jpeg',
   content: "外面看起來就超冷.... 我決定回被窩繼續睡....>.<",
   date: dayjs().format("YYYY/MM/DD HH:mm"),
