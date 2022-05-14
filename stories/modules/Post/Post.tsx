@@ -49,7 +49,7 @@ export const Post = ({
       />
       <p className="mb-4">{content}</p>
       {image && (
-        <div className="relative h-[157px] mb-5">
+        <div className="relative h-[430px] mb-5">
           <Image src={image} layout="fill" alt="image" />
         </div>
       )}
