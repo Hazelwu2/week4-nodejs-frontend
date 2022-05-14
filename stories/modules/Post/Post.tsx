@@ -24,7 +24,6 @@ export const Post = ({
   userName,
   userAvatar,
   content,
-  // src,
   date,
   className,
   likes,
@@ -34,7 +33,7 @@ export const Post = ({
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (query: string) => setValue(query)
+  const handleInputChange = (e: any) => setValue(e.target.value)
 
   return (
     <div
@@ -70,7 +69,7 @@ export const Post = ({
         </div>
         <Input
           className="h-10"
-          value={value}
+          defaultValue={value}
           onChange={handleInputChange}
         />
         <div className="w-[128px] relative">

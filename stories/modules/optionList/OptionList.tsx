@@ -29,7 +29,7 @@ export const OptionList = ({ options }: OptionListProps) => {
           <User
             key={option.name}
             userName={option.name}
-            src={option.icon}
+            src={'https://i.imgur.com/ebhxV0n.jpeg'}
             width="50px"
             height="50px"
           />

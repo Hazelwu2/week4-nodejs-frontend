@@ -23,7 +23,7 @@ const Template: ComponentStory<typeof FollowTitle> = args => (
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-  src: user5,
+  src: 'https://i.imgur.com/ebhxV0n.jpeg',
   followName: "阿爾敏",
   followQuantity: "987,987",
 };

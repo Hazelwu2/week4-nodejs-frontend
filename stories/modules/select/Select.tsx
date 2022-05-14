@@ -3,19 +3,20 @@ import React, { useState } from "react";
 
 interface SelectProps {
   className?: string;
-  onChange: any[];
+  defaultValue?: string;
+  onChange?: (e: React.FormEvent<HTMLSelectElement>) => void;
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const Select = ({ className, onChange }: SelectProps) => {
-  const [selectedOption, setSelectdOption] = useState()
+export const Select = ({ className, defaultValue, onChange }: SelectProps) => {
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative mr-3 ${className}`}>
       <select
-        onChange={e => onChange(e.target.value)}
+        defaultValue={defaultValue}
+        onChange={onChange}
         className="w-full md:w-[156px] py-2.5 px-4 border-2 border-solid border-dark appearance-none">
         <option value="desc">最新貼文</option>
         <option value="asc">舊到新貼文</option>

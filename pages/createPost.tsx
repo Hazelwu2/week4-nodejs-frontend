@@ -10,19 +10,23 @@ import { Button } from "../stories/modules/button/Button";
 import { createPostAPI } from '../api/post'
 import { useRouter } from 'next/router'
 import Swal from 'sweetalert2'
+// import { Blob } from 'buffer';
 
 interface Image {
-  imageFile: Blob;
+  // imageFile: new Blob(['']);
+  // imageFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  imageFile: any;
   imagePreview: string;
   imageSize: number;
 }
+
 export const CreatePostPage: NextPage = () => {
   const router = useRouter()
   const [options, setOptions] = useState([{ name: "邊緣小杰", icon: user1 }]);
   const [content, setContent] = useState("");
   const [isError, setIsError] = useState(false);
   const defaultImage = {
-    imageFile: new Blob,
+    imageFile: "",
     imagePreview: "",
     imageSize: 0,
   }

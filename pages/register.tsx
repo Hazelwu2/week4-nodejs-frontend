@@ -11,6 +11,19 @@ const Register: NextPage = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSetEmail = (e: any) => {
+    setEmail(e.target.value)
+  }
+
+  const handleSetName = (e: any) => {
+    setUserName(e.target.value)
+  }
+
+  const handleSetPassword = (e: any) => {
+    setPassword(e.target.value)
+  }
+
   return (
     <div>
       <Head>
@@ -22,7 +35,7 @@ const Register: NextPage = () => {
       <main className="flex justify-center items-center h-full min-h-screen bg-c-bg">
         <div className="flex max-w-[869px] max-h-[535px] min-w-[600px] border-2 border-solid border-dark py-[60px] px-12 bg-c-bg shadow-main">
           <div className="w-1/2 pr-6">
-            <Image src={login} objectFit="cover"></Image>
+            <Image src={login} objectFit="cover" alt="image"></Image>
           </div>
           <div className="w-1/2 flex flex-col items-center pl-6">
             <h1 className="text-6xl text-primary font-paytone font-black leading-1.4">
@@ -32,20 +45,20 @@ const Register: NextPage = () => {
               註冊
             </h2>
             <Input
-              value={userName}
-              onChange={e => setEmail(e.target.value)}
+              defaultValue={userName}
+              onChange={handleSetName}
               placeholder="暱稱"
               className="mt-6"
             />
             <Input
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              defaultValue={email}
+              onChange={handleSetEmail}
               placeholder="Email"
               className="mt-4"
             />
             <Input
-              value={password}
-              onChange={e => setPassword(e.target.value)}
+              defaultValue={password}
+              onChange={handleSetPassword}
               placeholder="Password"
               className="mt-4"
             />
@@ -56,7 +69,7 @@ const Register: NextPage = () => {
                 console.log("login");
               }}
             />
-            <Link href="/register">
+            <Link href="/register" passHref>
               <span className="text-dark">登入</span>
             </Link>
           </div>

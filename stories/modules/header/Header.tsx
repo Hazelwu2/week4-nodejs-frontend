@@ -24,7 +24,7 @@ export const Header = ({ className }: HeaderProps) => {
           onMouseOver={() => setDropdown(true)}
           onMouseLeave={() => setDropdown(false)}
         >
-          <User userName="Member" src={user1} bottomLine />
+          <User userName="Member" src={"https://i.imgur.com/ebhxV0n.jpeg"} bottomLine />
           <div
             className={`${!dropDown && "invisible"
               } absolute -bottom-32 left-0 w-[178px] border-2 border-solid border-dark bg-white z-10`}

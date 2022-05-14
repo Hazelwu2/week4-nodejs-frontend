@@ -2,36 +2,27 @@ import React, { useState } from "react";
 import style from "./input.module.css";
 
 interface InputProps {
-  value?: string;
+  defaultValue?: string;
   placeholder?: string;
   className?: string;
   errorMessage?: string;
-  // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChange?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = ({
-  value = "",
+  defaultValue = "",
   placeholder = "",
   className,
   errorMessage,
   onChange,
 }: InputProps) => {
 
-  const [inputValue, setInputValue] = useState('')
-
-  const setInput = (val) => {
-    setInputValue(val)
-    onChange(val)
-  }
-
   return (
     <>
-      {/* onChange={e => setInputValue(e.target.value)} */}
-      {/* value={inputValue} */}
       <input
+        defaultValue={defaultValue}
         placeholder={placeholder}
-        onChange={e => setInput(e.target.value)}
+        onChange={onChange}
         type="text"
         className={`${style.input} border-2 border-solid border-dark rounded-none w-full h-12 pl-6 ${className}`}
       />

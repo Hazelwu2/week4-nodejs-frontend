@@ -1,6 +1,6 @@
 import { SearchOutlined } from "@ant-design/icons";
 import type { NextPage } from "next";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "../stories/modules/header/Header";
 import { Input } from "../stories/modules/input/Input";
 import { OptionList } from "../stories/modules/optionList/OptionList";
@@ -48,8 +48,8 @@ export const PostPage: NextPage = () => {
    * @date 2022-05-08
    * @param {string} val:string desc(舊到新貼文), asc(最新貼文)
    */
-  const handleSelectChange = async (sort: string) => {
-    setTimeSort(sort)
+  const handleSelectChange = async (e: any) => {
+    setTimeSort(e.target.value)
     const params = {
       sort,
       q: query
@@ -59,7 +59,9 @@ export const PostPage: NextPage = () => {
     if (status === 1) setPostList(data)
   }
 
-  const handleInputChange = (query: string) => setQuery(query)
+  const handleInputChange = (e: any) => {
+    setQuery(e.target.value)
+  }
 
   const searchData = async () => {
     const params = {
@@ -80,6 +82,7 @@ export const PostPage: NextPage = () => {
             <div className="flex flex-col md:flex-row mb-4">
               <Select
                 onChange={handleSelectChange}
+                defaultValue={sort}
                 className="mb-1.5 md:mb-0 md:mr-3"
               />
               <div className="flex w-full">

@@ -11,36 +11,50 @@ import { Title } from "../stories/modules/title/Title";
 import { User } from "../stories/modules/user/User";
 import { LikeOutlined, RightCircleOutlined } from "@ant-design/icons";
 
+interface PostList {
+  _id: string,
+  user: {
+    _id: string,
+    name: string,
+    avatar: string
+  },
+  content: string;
+  createdAt: number;
+  image: string;
+  likes: number;
+  comments?: any[];
+}
+
 export const LikePostPage: NextPage = () => {
   const [options, setOptions] = useState([{ name: "邊緣小杰", icon: user1 }]);
   const mockData = [
     {
       userName: "波吉",
-      userIcon: user1,
+      avatar: 'https://i.imgur.com/ebhxV0n.jpeg',
       date: dayjs().format("YYYY/MM/DD HH:mm"),
       postFromTime: dayjs().format("YYYY/MM/DD HH:mm"),
     },
     {
       userName: "多魯米",
-      userIcon: user51,
+      avatar: 'https://i.imgur.com/ebhxV0n.jpeg',
       date: dayjs().format("YYYY/MM/DD HH:mm"),
       postFromTime: dayjs().format("YYYY/MM/DD HH:mm"),
     },
     {
       userName: "卡克",
-      userIcon: user4,
+      avatar: 'https://i.imgur.com/ebhxV0n.jpeg',
       date: dayjs().format("YYYY/MM/DD HH:mm"),
       postFromTime: dayjs().format("YYYY/MM/DD HH:mm"),
     },
     {
       userName: "希琳",
-      userIcon: user5,
+      avatar: 'https://i.imgur.com/ebhxV0n.jpeg',
       date: dayjs().format("YYYY/MM/DD HH:mm"),
       postFromTime: dayjs().format("YYYY/MM/DD HH:mm"),
     },
     {
       userName: "多瑪斯",
-      userIcon: user1,
+      avatar: 'https://i.imgur.com/ebhxV0n.jpeg',
       date: dayjs().format("YYYY/MM/DD HH:mm"),
       followTime: dayjs().format("DD"),
       followFromTime: dayjs().format("YYYY/MM/DD HH:mm"),
@@ -61,7 +75,7 @@ export const LikePostPage: NextPage = () => {
                 <User
                   userName={post.userName}
                   post={post.postFromTime}
-                  src={post.userIcon}
+                  src={post.avatar}
                 />
                 <ul className="flex mr-6">
                   <li className="flex flex-col mr-9">

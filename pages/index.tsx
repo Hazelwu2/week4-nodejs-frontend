@@ -13,6 +13,15 @@ const Home: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setError] = useState(false);
+
+  const handleSetEmail = (e: any) => {
+    setEmail(e.target.value)
+  }
+
+  const handleSetPassword = (e: any) => {
+    setPassword(e.target.value)
+  }
+
   return (
     <div>
       <Head>
@@ -34,14 +43,14 @@ const Home: NextPage = () => {
               到元宇宙展開全新社交圈
             </h2>
             <Input
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              defaultValue={email}
+              onChange={handleSetEmail}
               placeholder="Email"
               className="mb-4"
             />
             <Input
-              value={password}
-              onChange={e => setPassword(e.target.value)}
+              defaultValue={password}
+              onChange={handleSetPassword}
               placeholder="Password"
               className="mb-4"
             />
@@ -55,7 +64,7 @@ const Home: NextPage = () => {
                 router.push("/post");
               }}
             />
-            <Link href="/register">
+            <Link href="/register" passHref>
               <span className="text-dark">註冊帳號</span>
             </Link>
           </div>

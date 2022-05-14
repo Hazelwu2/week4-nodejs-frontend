@@ -4,12 +4,12 @@ import userDefault from "../../../public/image/user_default.png";
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
 
-interface TagProps {}
+interface TagProps { }
 
 /**
  * Primary UI component for user interaction
  */
-export const Tag = ({}: TagProps) => {
+export const Tag = ({ }: TagProps) => {
   const [mode, setMode] = useState("updateName");
   const [userName, setUserName] = useState("");
   const [gender, setGender] = useState("");
@@ -21,22 +21,20 @@ export const Tag = ({}: TagProps) => {
       <div>
         <button
           type="button"
-          className={`${
-            mode === "updateName"
-              ? "bg-dark text-white"
-              : "border-2 border-solid border-dark border-b-0"
-          } bg-white px-6 py-2 rounded-t-lg ml-4`}
+          className={`${mode === "updateName"
+            ? "bg-dark text-white"
+            : "border-2 border-solid border-dark border-b-0"
+            } bg-white px-6 py-2 rounded-t-lg ml-4`}
           onClick={() => setMode("updateName")}
         >
           暱稱修改
         </button>
         <button
           type="button"
-          className={`${
-            mode === "updatePassword"
-              ? "bg-dark text-white"
-              : "border-2 border-solid border-dark border-b-0"
-          } bg-white px-6 py-2 rounded-t-lg`}
+          className={`${mode === "updatePassword"
+            ? "bg-dark text-white"
+            : "border-2 border-solid border-dark border-b-0"
+            } bg-white px-6 py-2 rounded-t-lg`}
           onClick={() => setMode("updatePassword")}
         >
           重設密碼
@@ -55,7 +53,7 @@ export const Tag = ({}: TagProps) => {
               <p className="text-dark mb-1">暱稱</p>
               <Input
                 className="mb-4"
-                value={userName}
+                defaultValue={userName}
                 onChange={e => setUserName(e.target.value)}
               />
               <p className="text-dark mb-2">性別</p>
@@ -66,10 +64,9 @@ export const Tag = ({}: TagProps) => {
                   value="male"
                   checked={gender === "male"}
                   onChange={e => setGender(e.target.value)}
-                  className={`${
-                    gender === "male" &&
+                  className={`${gender === "male" &&
                     "after:w-2.5 after:h-2.5 after:bg-dark after:absolute after:top-[3px] after:left-[3.5px] after:rounded-full"
-                  } relative w-5 h-5 border-2 border-solid border-dark rounded-full mr-3 appearance-none`}
+                    } relative w-5 h-5 border-2 border-solid border-dark rounded-full mr-3 appearance-none`}
                 />
                 <span className="mr-6">男性</span>
                 <input
@@ -78,10 +75,9 @@ export const Tag = ({}: TagProps) => {
                   value="famale"
                   checked={gender === "famale"}
                   onChange={e => setGender(e.target.value)}
-                  className={`${
-                    gender === "famale" &&
+                  className={`${gender === "famale" &&
                     "after:w-2.5 after:h-2.5 after:bg-dark after:absolute after:top-[3px] after:left-[3.5px] after:rounded-full"
-                  } relative w-5 h-5 border-2 border-solid border-dark rounded-full mr-3 appearance-none`}
+                    } relative w-5 h-5 border-2 border-solid border-dark rounded-full mr-3 appearance-none`}
                 />
                 女性
               </div>
@@ -108,14 +104,14 @@ export const Tag = ({}: TagProps) => {
               <p className="text-dark mb-1">輸入新密碼</p>
               <Input
                 className="mb-4"
-                value={password}
+                defaultValue={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="請輸入新密碼"
               />
               <p className="text-dark mb-1">再次輸入</p>
               <Input
                 className="mb-6"
-                value={repeatPassword}
+                defaultValue={repeatPassword}
                 onChange={e => setRepeatPassword(e.target.value)}
                 placeholder="再次輸入新密碼"
               />

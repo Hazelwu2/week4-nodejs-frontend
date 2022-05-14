@@ -17,7 +17,7 @@ const Template: ComponentStory<typeof Input> = args => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-  return <Input {...args} value={value} onChange={onChange} />;
+  return <Input {...args} defaultValue={value} onChange={onChange} />;
 };
 
 const ErrorTemplate: ComponentStory<typeof Input> = args => {
@@ -25,7 +25,7 @@ const ErrorTemplate: ComponentStory<typeof Input> = args => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
-  return <Input {...args} value={value} onChange={onChange} />;
+  return <Input {...args} defaultValue={value} onChange={onChange} />;
 };
 
 export const EmailTemplate = Template.bind({});
