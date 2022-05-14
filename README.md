@@ -42,7 +42,7 @@
 * [Git](https://git-scm.com/)
 * [Nextjs](https://nextjs.org/)
 * [React](#)
-* [Typescript](#)第四週六角學院 Nodejs 主線任務，打造全端 (Full Stack) 網站架構，前後端分離開發。
+* [Typescript](#)
 * [後端 Nodejs Express API](https://github.com/Hazelwu2/week4-nodejs.git)
 
 
