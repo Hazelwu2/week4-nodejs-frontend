@@ -45,6 +45,8 @@ export const CreatePostPage: NextPage = () => {
   const submitForm = async () => {
 
     const formData = new FormData()
+    // TODO: 暫先寫死 user
+    formData.append('user', '627f28858220ff6e230026b8')
     formData.append('name', 'Hazel')
     formData.append('content', content)
     formData.append('image', image.imageFile)
