@@ -32,7 +32,7 @@ export const NoPostPage: NextPage = () => {
     <>
       <Header />
       <div className="flex justify-center min-h-screen h-full pt-12 bg-c-bg">
-        <main className="max-w-[1200px] w-full flex justify-between">
+        <main className="max-w-[1200px] w-full flex justify-between px-6">
           <div className="w-3/4 pr-7">
             <div className="flex mb-4">
               <Select

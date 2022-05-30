@@ -50,10 +50,16 @@ export const Header = ({ className }: HeaderProps) => {
             className={`${!dropDown && "invisible"
               } absolute -bottom-32 left-0 w-[178px] border-2 border-solid border-dark bg-white z-10`}
           >
-            <p className="py-2 border-b-2 border-b-solid border-b-dark text-center hover:bg-c-bg cursor-pointer">
+            <p
+              className="py-2 border-b-2 border-b-solid border-b-dark text-center hover:bg-c-bg cursor-pointer"
+              onClick={() => router.push("/userWall")}
+            >
               我的貼文牆
             </p>
-            <p className="py-2 border-b-2 border-b-solid border-b-dark text-center hover:bg-c-bg cursor-pointer">
+            <p
+              className="py-2 border-b-2 border-b-solid border-b-dark text-center hover:bg-c-bg cursor-pointer"
+              onClick={() => router.push('/updateUser')}
+            >
               修改個人資料
             </p>
             <p
