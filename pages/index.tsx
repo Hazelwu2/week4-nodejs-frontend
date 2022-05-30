@@ -1,17 +1,24 @@
+// Next
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import login from "../public/image/login.svg";
+import { useRouter } from "next/router";
+// Component
+import loginSvg from "../public/image/login.svg";
 import { Button } from "../stories/modules/button/Button";
 import { Input } from "../stories/modules/input/Input";
-import { useRouter } from "next/router";
+// Utils
+import { showSuccess } from '../utils/resHandle'
+import { setToken } from '../utils/auth'
+// API
+import { signInAPI } from '../api/user.js'
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("tinazx056@gmail.com");
+  const [password, setPassword] = useState("12345678");
   const [isError, setError] = useState(false);
 
   const handleSetEmail = (e: any) => {
@@ -20,6 +27,22 @@ const Home: NextPage = () => {
 
   const handleSetPassword = (e: any) => {
     setPassword(e.target.value)
+  }
+
+  // 請求登入 API
+  const login = async () => {
+    const params = {
+      email,
+      password
+    }
+    const { status, data } = await signInAPI(params)
+
+    if (status === 1) {
+      showSuccess('登入成功', () => {
+        router.push('/post')
+        setToken(data.token)
+      })
+    }
   }
 
   return (
@@ -33,7 +56,7 @@ const Home: NextPage = () => {
       <main className="flex justify-center items-center h-full min-h-screen bg-c-bg px-6">
         <div className="flex max-w-[869px] max-h-[535px] min-w-[600px] border-2 border-solid border-dark py-[70px] px-12 bg-c-bg shadow-main">
           <div className="w-1/2 pr-6">
-            <Image src={login} objectFit="cover"></Image>
+            <Image src={loginSvg} objectFit="cover" alt="Login"></Image>
           </div>
           <div className="w-1/2 flex flex-col items-center pl-6">
             <h1 className="text-6xl text-primary font-paytone font-black leading-1.4">
@@ -60,9 +83,7 @@ const Home: NextPage = () => {
             <Button
               label="登入"
               className="my-4"
-              onButtonClick={() => {
-                router.push("/post");
-              }}
+              onButtonClick={login}
             />
             <Link href="/register" passHref>
               <span className="text-dark">註冊帳號</span>

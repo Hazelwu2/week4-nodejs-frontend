@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import { getToken } from '../utils/auth'
 
 console.log(process.env.NODE_ENV)
 const service = axios.create({
@@ -17,6 +18,8 @@ service.interceptors.request.use(
       'padding: 3px;',
       config.data ? config.data : ''
     )
+
+    if (getToken()) config.headers['Authorization'] = `Bearer ${getToken()}`
 
     return config
   },
@@ -47,7 +50,7 @@ service.interceptors.response.use(
   error => {
     console.error(`❌ 發生錯誤：${error}`)
 
-    const { message } = error?.response.data
+    const { message } = error?.response?.data
 
     Swal.fire({
       icon: 'error',
