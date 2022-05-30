@@ -1,5 +1,4 @@
 import request from '../utils/axios'
-import { resHandle } from '../utils/resHandle'
 
 // 取得清單
 export async function getPostListAPI(data) {
@@ -8,7 +7,6 @@ export async function getPostListAPI(data) {
     method: 'get',
     data
   })
-
 }
 
 // 取得清單
