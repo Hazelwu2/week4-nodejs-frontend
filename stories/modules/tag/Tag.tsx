@@ -1,6 +1,7 @@
 // React, Next
 import React, { useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
+import { useForm } from 'react-hook-form'
 // Components
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
@@ -12,6 +13,7 @@ import { uploadImageAPI } from '../../../api/other'
 // Utils
 import { showSuccess } from '../../../utils/resHandle'
 import { uploadImage } from '../../../utils/upload'
+
 interface TagProps { }
 
 interface Image {
@@ -29,7 +31,15 @@ export const Tag = ({ }: TagProps) => {
   const [gender, setGender] = useState("");
   const [isError, setIsError] = useState(false);
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [avatar, setAvatar] = useState("");
+
+  // 表單
+  const {
+    register,
+    watch,
+    formState: { errors, isValid }
+  } = useForm({ mode: 'onChange' })
 
   const defaultImage = {
     imageFile: "",
@@ -37,7 +47,6 @@ export const Tag = ({ }: TagProps) => {
     imageSize: 0,
   }
   const [image, setImage] = useState<Image>(defaultImage);
-  const [repeatPassword, setRepeatPassword] = useState("");
 
   const updatePassword = async () => {
     await updatePasswordAPI()
@@ -59,12 +68,26 @@ export const Tag = ({ }: TagProps) => {
     formData.append('avatar', image.imageFile)
     const res = await updateMyProfileAPI(formData)
 
-    if (res.status === 1) {
+    if (res?.status === 1) {
       showSuccess('修改成功', () => {
         getMyProfile()
       })
     }
-    setIsError(isError)
+  }
+
+  const fetchResetPassword = async () => {
+    const params = {
+      password,
+      confirmPassword: repeatPassword
+    }
+    const res = await updatePasswordAPI(params)
+
+    if (res?.status === 1) {
+      showSuccess('修改成功', () => {
+        setRepeatPassword('')
+        getMyProfile()
+      })
+    }
   }
 
   useEffect(() => {
@@ -128,13 +151,19 @@ export const Tag = ({ }: TagProps) => {
             <div className="w-3/5 flex flex-col ">
               <p className="text-dark mb-1">暱稱</p>
               <Input
-                className="mb-4"
+                className="mb-1"
                 defaultValue={userName}
                 onChange={e => setUserName(e.target.value)}
+                register={register('userName', { required: true })}
+                error={{
+                  errors: errors.userName,
+                  requiredError: '請輸入暱稱'
+                }}
               />
-              <p className="text-dark mb-2">性別</p>
+              <p className="text-dark mb-1">性別</p>
               <div className="flex items-center mb-9">
                 <input
+                  {...register('gender', { required: true })}
                   type="radio"
                   name="gender"
                   value="male"
@@ -146,6 +175,7 @@ export const Tag = ({ }: TagProps) => {
                 />
                 <span className="mr-6">男性</span>
                 <input
+                  {...register('gender', { required: true })}
                   type="radio"
                   name="gender"
                   value="female"
@@ -179,19 +209,44 @@ export const Tag = ({ }: TagProps) => {
             <div className="w-3/5">
               <p className="text-dark mb-1">輸入新密碼</p>
               <Input
-                className="mb-4"
+                className="mb-1"
                 defaultValue={password}
                 onChange={e => setPassword(e.target.value)}
+                type="password"
                 placeholder="請輸入新密碼"
+                register={register("password", { required: true, minLength: 6 })}
+                error={{
+                  errors: errors.password,
+                  requiredError: "請輸入密碼",
+                  minLengthError: "密碼長度應大於6個字元",
+                }}
               />
               <p className="text-dark mb-1">再次輸入</p>
               <Input
-                className="mb-6"
+                className="mb-1"
                 defaultValue={repeatPassword}
                 onChange={e => setRepeatPassword(e.target.value)}
+                type="password"
                 placeholder="再次輸入新密碼"
+                register={register("repeatPassword", { required: true, minLength: 6 })}
+                error={{
+                  errors: errors.repeatPassword,
+                  requiredError: "請重新輸入密碼",
+                  minLengthError: "密碼長度應大於6個字元",
+                }}
               />
-              <Button label="重設密碼" disable={!password || !repeatPassword} />
+              {watch("password") !== watch("repeatPassword") &&
+                <p className="w-full text-sm text-error mt-1">
+                  密碼不一致
+                </p>
+              }
+              <Button
+                className="mt-6 cursor-pointer"
+                type="submit"
+                label="重設密碼"
+                disable={!isValid || watch('password') !== watch('repeatPassword')}
+                onButtonClick={fetchResetPassword}
+              />
             </div>
           </>
         )}

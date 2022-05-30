@@ -23,7 +23,7 @@ export async function signUpAPI(data) {
 export async function updatePasswordAPI(data) {
   return await request({
     url: 'api/users/updatePassword',
-    method: 'post',
+    method: 'patch',
     data
   })
 
