@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+// React, Next
+import React, { useEffect, useState } from "react";
 import Image, { StaticImageData } from "next/image";
-import userDefault from "../../../public/image/user_default.png";
+// Components
 import { Input } from "../input/Input";
 import { Button } from "../button/Button";
+import userDefault from "../../../public/image/user_default.png";
 
+// API
+import { getMyProfileAPI, updateMyProfileAPI, updatePasswordAPI } from '../../../api/user'
+import { uploadImageAPI } from '../../../api/other'
+// Utils
+import { showSuccess } from '../../../utils/resHandle'
+import { uploadImage } from '../../../utils/upload'
 interface TagProps { }
+
+interface Image {
+  imageFile: any;
+  imagePreview: string;
+  imageSize: number;
+}
 
 /**
  * Primary UI component for user interaction
@@ -15,7 +29,54 @@ export const Tag = ({ }: TagProps) => {
   const [gender, setGender] = useState("");
   const [isError, setIsError] = useState(false);
   const [password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState("");
+
+  const defaultImage = {
+    imageFile: "",
+    imagePreview: "",
+    imageSize: 0,
+  }
+  const [image, setImage] = useState<Image>(defaultImage);
   const [repeatPassword, setRepeatPassword] = useState("");
+
+  const updatePassword = async () => {
+    await updatePasswordAPI()
+  }
+
+  // 取得個人資料
+  const getMyProfile = async () => {
+    const { data } = await getMyProfileAPI()
+    const { name, sex, avatar } = data
+    if (name) setUserName(name)
+    if (sex) setGender(sex)
+    if (avatar) setAvatar(avatar)
+  }
+
+  const submitForm = async () => {
+    const formData = new FormData()
+    formData.append('name', userName)
+    formData.append('sex', gender)
+    formData.append('avatar', image.imageFile)
+    const res = await updateMyProfileAPI(formData)
+
+    if (res.status === 1) {
+      showSuccess('修改成功', () => {
+        getMyProfile()
+      })
+    }
+    setIsError(isError)
+  }
+
+  useEffect(() => {
+    // 取得個人資料
+    getMyProfileAPI().then(({ data }) => {
+      const { name, sex, avatar } = data
+      if (name) setUserName(name)
+      if (sex) setGender(sex)
+      if (avatar) setAvatar(avatar)
+    })
+  }, [])
+
   return (
     <div className={`flex flex-col min-w-[500px]`}>
       <div>
@@ -44,11 +105,26 @@ export const Tag = ({ }: TagProps) => {
         {mode === "updateName" ? (
           <>
             <div className="mb-4">
-              <Image width="107px" height="107px" src={userDefault} />
+              <Image
+                width="107px"
+                height="107px"
+                src={image.imagePreview || avatar || userDefault}
+                alt="Avatar"
+              />
             </div>
-            <button type="button" className="bg-dark text-white py-2 px-6 mb-3">
-              上傳大頭照
-            </button>
+            <label
+              htmlFor="uploadAvatar"
+              className="bg-dark w-[128px] h-10 text-white py-2 px-6 mb-3"
+            >
+              <span>上傳大頭照</span>
+              <input
+                type="file"
+                accept="image/jpg,image/jpeg,image/png"
+                id="uploadAvatar"
+                className="h-0"
+                onChange={e => uploadImage(e, setIsError, setImage)}
+              />
+            </label>
             <div className="w-3/5 flex flex-col ">
               <p className="text-dark mb-1">暱稱</p>
               <Input
@@ -72,10 +148,10 @@ export const Tag = ({ }: TagProps) => {
                 <input
                   type="radio"
                   name="gender"
-                  value="famale"
-                  checked={gender === "famale"}
+                  value="female"
+                  checked={gender === "female"}
                   onChange={e => setGender(e.target.value)}
-                  className={`${gender === "famale" &&
+                  className={`${gender === "female" &&
                     "after:w-2.5 after:h-2.5 after:bg-dark after:absolute after:top-[3px] after:left-[3.5px] after:rounded-full"
                     } relative w-5 h-5 border-2 border-solid border-dark rounded-full mr-3 appearance-none`}
                 />
@@ -94,7 +170,7 @@ export const Tag = ({ }: TagProps) => {
               <Button
                 label="送出更新"
                 active={!isError}
-                onButtonClick={() => setIsError(!isError)}
+                onButtonClick={submitForm}
               />
             </div>
           </>
