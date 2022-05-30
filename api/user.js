@@ -10,10 +10,11 @@ export async function signInAPI(data) {
 }
 
 // 註冊
-export async function signUpAPI() {
+export async function signUpAPI(data) {
   return await request({
     url: `api/users/sign_up`,
     method: 'post',
+    data
   })
 
 }

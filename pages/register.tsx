@@ -1,16 +1,23 @@
+// Next
 import type { NextPage } from "next";
+import { useRouter } from 'next/router'
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+// Component
 import login from "../public/image/login.svg";
 import { Button } from "../stories/modules/button/Button";
 import { Input } from "../stories/modules/input/Input";
+import { showSuccess } from '../utils/resHandle'
+// API
+import { signUpAPI } from '../api/user.js'
 
 const Register: NextPage = () => {
-  const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter();
+  const [userName, setUserName] = useState("Hazel");
+  const [email, setEmail] = useState("qqq21@boun.ab");
+  const [password, setPassword] = useState("12345678");
 
   const handleSetEmail = (e: any) => {
     setEmail(e.target.value)
@@ -23,6 +30,21 @@ const Register: NextPage = () => {
   const handleSetPassword = (e: any) => {
     setPassword(e.target.value)
   }
+
+  const signIn = (async () => {
+    const params = {
+      name: userName,
+      email: email,
+      password: password,
+      passwordConfirm: password
+    }
+
+    const res = await signUpAPI(params)
+
+    if (res?.status === 1) {
+      showSuccess('註冊成功', () => router.push('/'))
+    }
+  })
 
   return (
     <div>
@@ -65,9 +87,7 @@ const Register: NextPage = () => {
             <Button
               label="註冊"
               className="my-4"
-              onButtonClick={() => {
-                console.log("login");
-              }}
+              onButtonClick={signIn}
             />
             <Link href="/register" passHref>
               <span className="text-dark">登入</span>
